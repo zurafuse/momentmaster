@@ -23,6 +23,8 @@ Moment Master's code is founded and owned by Timothy Horton. You have my permiss
 
 
 ## How to Use
-1. Follow setup instructures above.
-2. Create a parent account for yourself in the database (read and write permissions) and a student account (read-only) for all of your Honor Blast players. Use the student account to log into the site, and use the parent account to do updates.
-3. Create an avatar and account for each student and begin creating prizes, trophies, and quests.
+1. Follow the setup instructures above.
+2. Use your username and password to log into the site.
+3. Press the "Create Project" link to create a new project. Enter the needed information. Both date and time fields are required, along with the PM/AM specification. Press "Create" to save your new project.
+4. Press the "Details" link beside a project to view details and to perform actions such as adding a time entry, comment, or subtask.
+5. Press the "Time Sheets" link at the top of the page for the option to generate time sheets for each user.
