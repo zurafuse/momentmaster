@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MomentMaster.Models.Comment">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAACAAAAAABAAAAAAA=</HashCode>
+      <FileName>Models\Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MomentMaster.Models.Hours">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAAAAgAAAAAAAAAAAAIAAgAAAQAAABAAAAAAA=</HashCode>
+      <FileName>Models\Hours.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MomentMaster.Models.TimeObject">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACEBAAAECABwAACAAAAAQAAAAAAAAAAACSABgEAFcgA=</HashCode>
+      <FileName>Models\TimeObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MomentMaster.Models.User">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAQAIAAAAAAAAAAEAAAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
