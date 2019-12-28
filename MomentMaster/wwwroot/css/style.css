@@ -1,0 +1,11 @@
+﻿.row-highlight:hover {
+    background-color: lightgrey;
+}
+
+.left-padding {
+    padding-left: 10px;
+}
+
+.warning-message {
+    color: red;
+}
