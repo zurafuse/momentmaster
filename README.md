@@ -14,14 +14,10 @@ Moment Master's code is founded and owned by Timothy Horton. You have my permiss
 4. Open the configuration file named "appsettings.json" and replace the DefaultConnection with your database's connection string.
 5. In the extracted folder, open MomentMaster.sln using Visual Studio.
 6. Go to the Package Manager Console window and enter the following commands to create the tables in the database:
-...Update-Database -Context UserContext
-     
-...Update-Database -Context TimeObjectContext
-     
-...Update-Database -Context CommentContext
-     
-...Update-Database -Context HoursContext
-     
+   Update-Database -Context UserContext
+   Update-Database -Context TimeObjectContext
+   Update-Database -Context CommentContext
+   Update-Database -Context HoursContext
 7. In your SQL Server database, insert a new record into the User table to give yourself a username and password.
 8. In Visual Studio, press the Debug button (or press F5) to start the web application.
 
