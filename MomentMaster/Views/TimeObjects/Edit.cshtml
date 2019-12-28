@@ -1,0 +1,173 @@
+﻿@model MomentMaster.Models.TimeObject
+
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>@Model.Type</h4>
+<hr />
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Project_Id" />
+            @if (Model.Parent_Id != -1)
+            {
+                <div class="form-group" style="visibility: collapse;">
+                    <label asp-for="Parent_Id" class="control-label"></label>
+                    <input asp-for="Parent_Id" class="form-control" value="@Model.Parent_Id" />
+                    <span asp-validation-for="Parent_Id" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            @if (Model.Parent_Id == -1)
+            {
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="Project">Project</option>
+                        <option value="Case">Case</option>
+                        <option value="Operation">Operation</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="Task">Task</option>
+                        <option value="Time Period">Time Period</option>
+                        <option value="Deployment">Deployment</option>
+                        <option value="Defect">Defect</option>
+                        <option value="Research">Research</option>
+                        <option value="Request">Request</option>
+                        <option value="Incident">Incident</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="form-group">
+                <label asp-for="User_Id" class="control-label">Assigned User</label>
+                <select asp-for="User_Id" class="form-control">
+                    @foreach (User thisUser in ViewBag.Users)
+                    {
+                        <option value="@thisUser.User_Id">@thisUser.FullName (@thisUser.UserName)</option>
+                    }
+                </select>
+                <span asp-validation-for="User_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OriginalEstimate" class="control-label"></label>
+                <input asp-for="OriginalEstimate" class="form-control" />
+                <span asp-validation-for="OriginalEstimate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoursBudgeted" class="control-label"></label>
+                <input asp-for="HoursBudgeted" class="form-control" />
+                <span asp-validation-for="HoursBudgeted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Canceled">Canceled</option>
+                    <option value="Backlog">Backlog</option>
+                    <option value="Not Started">Not Started</option>
+                    <option value="Inception">Inception</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Business Analysis">Business Analysis</option>
+                    <option value="Research">Research</option>
+                    <option value="Development">Development</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Ready for Deployment">Ready for Deployment</option>
+                    <option value="Complete">Complete</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@if (Model.Parent_Id == -1 || ViewBag.isProjectFound == false)
+{
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else
+{
+    <div>
+        <a href="/TimeObjects/Details/@Model.Parent_Id"><p>Back to Parent Project</p></a>
+    </div>
+}
+
+<br />
+
+<div>
+
+    <h3>TIME WORKED</h3>
+    <a href="/Hours/Create/@Model.Project_Id"><p>CREATE NEW TIME ENTRY</p></a>
+    @foreach (var time in Model.Hours)
+    {
+        <div class="row-highlight">
+            <a href="/Hours/Edit/@time.Hour_Id">Edit</a><span> | </span><a href="/Hours/Details/@time.Hour_Id">Details</a><span> | </span><a href="/Hours/Delete/@time.Hour_Id">Delete</a>
+            <div>
+                <p>@time.Description</p>
+                <p>@time.StartTime to @time.EndTime</p>
+                <p>Hours Worked: @time.GetHours()</p>
+                <p>User: @time.User.UserName (@time.User.FullName)</p>
+                <hr />
+            </div>
+        </div>
+        <br />
+    }
+
+    <h3>SUBTASKS</h3>
+    <a href="/TimeObjects/Create/@Model.Project_Id"><p>CREATE NEW SUBTASK</p></a>
+    @foreach (var subTask in Model.SubTasks)
+    {
+        <div class="row-highlight">
+            <a href="/TimeObjects/Edit/@subTask.Project_Id">Edit</a><span> | </span><a href="/TimeObjects/Details/@subTask.Project_Id">Details</a><span> | </span><a href="/TimeObjects/Delete/@subTask.Project_Id">Delete</a>
+            <div>
+                <p>@subTask.Description (@subTask.HoursBudgeted hours budgeted)</p>
+                <hr />
+            </div>
+        </div>
+        <br />
+    }
+
+    <h3>COMMENTS</h3>
+    <a href="/Comments/Create/@Model.Project_Id"><p>ADD COMMENT</p></a>
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="row-highlight">
+            <a href="/Comments/Edit/@comment.Comment_Id">Edit</a><span> | </span><a href="/Comments/Details/@comment.Comment_Id">Details</a><span> | </span><a href="/Comments/Delete/@comment.Comment_Id">Delete</a>
+            <p>@comment.Content</p>
+            <hr />
+        </div>
+        <br />
+    }
+
+</div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

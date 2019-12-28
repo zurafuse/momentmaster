@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MomentMaster.Models.Hours>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (ViewBag.DateMessage == " ")
+{
+    <h1>Time Sheet for @ViewBag.User.FullName (@ViewBag.User.UserName)</h1>
+    <p>
+        @ViewBag.User.Hours Hours worked from @ViewBag.StartDate to @ViewBag.EndDate
+    </p>
+}
+else
+{
+    <h3>
+        @ViewBag.DateMessage
+    </h3>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Project_Id)
+            </th>
+            <th>
+                Hours
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="row-highlight">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project_Id)
+                </td>
+                <td>
+                    @item.GetHours()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Hour_Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Hour_Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Hour_Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

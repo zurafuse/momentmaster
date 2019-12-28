@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MomentMaster.Models.Hours>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Employee Time Sheets</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User&#39;s Full Name
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                User Id
+            </th>
+            <th>
+                Department
+            </th>
+            <th>
+                Total Hours Worked
+            </th>
+            <th>
+                Date Range
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var user in ViewBag.Users) {
+        <tr class="row-highlight">
+            <td>
+                @user.FullName
+            </td>
+            <td>
+                @user.UserName
+            </td>
+            <td>
+                @user.User_Id
+            </td>
+            <td>
+                @user.Department
+            </td>
+            <td>
+                @user.Hours
+            </td>
+            <td>
+                <form asp-area="" asp-controller="Hours" asp-action="TimeSheet">
+                    <input type="hidden" id="hours" name="hours" value="@user.Hours" />
+                    <input type="hidden" id="id" name="id" value="@user.User_Id" />
+                    <span>FROM: </span><input name="StartDate" class="form-control" id="StartDate" type="datetime-local" value="2019-01-01T00:00" data-val-required="The StartDate field is required." data-val="true">
+                    <span>TO: </span><input name="EndDate" class="form-control" id="EndDate" type="datetime-local" value="2020-12-31T23:59" data-val-required="The EndDate field is required." data-val="true">
+                    <button type="submit">GET TIME SHEET</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

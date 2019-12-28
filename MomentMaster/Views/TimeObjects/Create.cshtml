@@ -1,0 +1,124 @@
+﻿@model MomentMaster.Models.TimeObject
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>Create</h1>
+
+<h4>Create new project or task</h4>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (ViewBag.id > 0)
+            {
+                <div class="form-group" style="visibility: collapse;">
+                    <label asp-for="Parent_Id" class="control-label"></label>
+                    <input asp-for="Parent_Id" class="form-control" value="@ViewBag.id" />
+                    <span asp-validation-for="Parent_Id" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            @if (ViewBag.id > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="Task">Task</option>
+                        <option value="Time Period">Time Period</option>
+                        <option value="Deployment">Deployment</option>
+                        <option value="Defect">Defect</option>
+                        <option value="Research">Research</option>
+                        <option value="Request">Request</option>
+                        <option value="Incident">Incident</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <select asp-for="Type" class="form-control">
+                        <option value="Project">Project</option>
+                        <option value="Case">Case</option>
+                        <option value="Operation">Operation</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="User_Id" class="control-label">Assigned User</label>
+                <select asp-for="User_Id" class="form-control">
+                    @foreach (User thisUser in ViewBag.Users)
+                    {
+                        <option value="@thisUser.User_Id">@thisUser.FullName (@thisUser.UserName)</option>
+                    }
+                </select>
+                <span asp-validation-for="User_Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OriginalEstimate" class="control-label"></label>
+                <input asp-for="OriginalEstimate" class="form-control" />
+                <span asp-validation-for="OriginalEstimate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoursBudgeted" class="control-label"></label>
+                <input asp-for="HoursBudgeted" class="form-control" />
+                <span asp-validation-for="HoursBudgeted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Canceled">Canceled</option>
+                    <option value="Backlog">Backlog</option>
+                    <option value="Not Started">Not Started</option>
+                    <option value="Inception">Inception</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Business Analysis">Business Analysis</option>
+                    <option value="Research">Research</option>
+                    <option value="Development">Development</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Ready for Deployment">Ready for Deployment</option>
+                    <option value="Complete">Complete</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.id > 0)
+{
+    <div>
+        <a href="/TimeObjects/Details/@ViewBag.id">Back to Parent Project</a>
+    </div>
+}
+else
+{
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

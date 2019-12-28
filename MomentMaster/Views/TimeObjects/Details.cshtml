@@ -1,0 +1,143 @@
+﻿@model MomentMaster.Models.TimeObject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Model.Type</h4>
+    <hr />
+    <dl class="row">
+        <!--<dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Parent_Id)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Parent_Id)
+    </dd>-->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            Project Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Project_Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            Assigned User
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.UserName) (@Html.DisplayFor(model => model.User.FullName))
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OriginalEstimate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OriginalEstimate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HoursBudgeted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HoursBudgeted)
+        </dd>
+        <dt class="col-sm-2">
+            Total Hours Spent:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Spent)
+        </dd>
+        <dt class="col-sm-2">
+            Hours Remaining:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.GetRemainingHours()
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Project_Id">Edit</a> |
+    @if (Model.Parent_Id == -1 || ViewBag.isProjectFound == false)
+    {
+        <a asp-action="Index">Back to List</a>
+    }
+    else
+    {
+        <a href="/TimeObjects/Details/@Model.Parent_Id"><p>Back to Parent Project</p></a>
+    }
+</div>
+
+<br />
+
+<div>
+
+    <h3>TIME WORKED</h3>
+    <a href="/Hours/Create/@Model.Project_Id"><p>CREATE NEW TIME ENTRY</p></a>
+    @foreach (var time in Model.Hours)
+    {
+        <div class="row-highlight">
+            <a href="/Hours/Edit/@time.Hour_Id">Edit</a><span> | </span><a href="/Hours/Details/@time.Hour_Id">Details</a><span> | </span><a href="/Hours/Delete/@time.Hour_Id">Delete</a>
+            <div>
+                <p>@time.Description</p>
+                <p>@time.StartTime to @time.EndTime</p>
+                <p>Hours Worked: @time.GetHours()</p>
+                <p>User: @time.User.UserName (@time.User.FullName)</p>
+                <hr />
+            </div>
+        </div>
+        <br />
+    }
+
+
+    <h3>SUBTASKS</h3>
+    <a href="/TimeObjects/Create/@Model.Project_Id"><p>CREATE NEW SUBTASK</p></a>
+    @foreach (var subTask in Model.SubTasks)
+    {
+        <div class="row-highlight">
+            <a href="/TimeObjects/Edit/@subTask.Project_Id">Edit</a><span> | </span><a href="/TimeObjects/Details/@subTask.Project_Id">Details</a><span> | </span><a href="/TimeObjects/Delete/@subTask.Project_Id">Delete</a>
+            <div>
+                <p>@subTask.Description (@subTask.HoursBudgeted hours budgeted)</p>
+                <hr />
+            </div>
+        </div>
+        <br />
+    }
+
+    <h3>COMMENTS</h3>
+    <a href="/Comments/Create/@Model.Project_Id"><p>ADD COMMENT</p></a>
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="row-highlight">
+            <a href="/Comments/Edit/@comment.Comment_Id">Edit</a><span> | </span><a href="/Comments/Details/@comment.Comment_Id">Details</a><span> | </span><a href="/Comments/Delete/@comment.Comment_Id">Delete</a>
+            <p>@comment.Content</p>
+            <hr />
+        </div>
+        <br />
+    }
+
+</div>
+
