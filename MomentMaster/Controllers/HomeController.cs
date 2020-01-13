@@ -42,7 +42,7 @@ namespace MomentMaster.Controllers
                     goodLogin = true;
                     HttpContext.Session.SetString("Key", HttpContext.Session.Id + "_" + 
                         DateTime.Now + "_" + thisUser.User_Id + thisUser.UserName);
-                    LoginStatus.Keys.Add(HttpContext.Session.GetString("Key"));
+                    LoginStatus.Keys.Add(new Session(HttpContext.Session.GetString("Key"), thisUser.UserName, DateTime.Now));
                     break;
                 }
             }
