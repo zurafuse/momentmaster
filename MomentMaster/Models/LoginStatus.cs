@@ -8,18 +8,18 @@ namespace MomentMaster.Models
 {
     public static class LoginStatus
     {
-        public static List<string> Keys;
+        public static List<Session> Keys;
 
         static LoginStatus() {
-            Keys = new List<string>();
+            Keys = new List<Session>();
         }
 
         public static bool UserValidated(string thisSession)
         {
             bool isAuthorized = false;
-            foreach (string key in Keys)
+            foreach (Session key in Keys)
             {
-                if (key == thisSession)
+                if (key.Key == thisSession)
                 {
                     isAuthorized = true;
                     break;
@@ -32,7 +32,7 @@ namespace MomentMaster.Models
             int keyToRemove = -1;
             for (var i = 0; i < Keys.Count; i++)
             {
-                if (Keys[i] == thisSession)
+                if (Keys[i].Key == thisSession)
                 {
                     keyToRemove = i;
                 }
@@ -40,6 +40,23 @@ namespace MomentMaster.Models
             if (keyToRemove >= 0)
             {
                 Keys.RemoveAt(keyToRemove);
+            }
+            ExpireSessions(thisSession);
+        }
+        public static void ExpireSessions(string thisSession)
+        {
+            int keyToRemove = -1;
+            for (var i = 0; i < Keys.Count; i++)
+            {
+                if (Keys[i].Created >= DateTime.Now.AddMinutes(100))
+                {
+                    keyToRemove = i;
+                }
+            }
+            if (keyToRemove >= 0)
+            {
+                Keys.RemoveAt(keyToRemove);
+                ExpireSessions(thisSession);
             }
         }
     }
